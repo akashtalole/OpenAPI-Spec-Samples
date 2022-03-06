@@ -1,0 +1,544 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "paths": {
+        "/auth/login": {
+            "get": {
+                "responses": {
+                    "401": {
+                        "description": "Not authorized"
+                    },
+                    "404": {
+                        "description": "Auth not found"
+                    }
+                },
+                "summary": "Get the active authentication scheme",
+                "operationId": "get_namespace",
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/revoke": {
+            "delete": {
+                "responses": {
+                    "401": {
+                        "description": "Not authorized"
+                    },
+                    "404": {
+                        "description": "Auth not found"
+                    },
+                    "204": {
+                        "description": "Auth deleted"
+                    }
+                },
+                "summary": "Revoke an access token",
+                "operationId": "delete_auth",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/token"
+                        }
+                    }
+                ],
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/token": {
+            "post": {
+                "responses": {
+                    "401": {
+                        "description": "Not authorized"
+                    },
+                    "404": {
+                        "description": "Auth not found"
+                    },
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/auth"
+                        }
+                    }
+                },
+                "summary": "Exchange credentials for access token",
+                "operationId": "create_auth",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/auth"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/flow/": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/flow"
+                        }
+                    }
+                },
+                "summary": "Add a flow to the active configuration",
+                "operationId": "create_flow",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/flow"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "flow"
+                ]
+            }
+        },
+        "/flow/{id}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "The flow identifier",
+                    "name": "id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "delete": {
+                "responses": {
+                    "404": {
+                        "description": "Flow not found"
+                    },
+                    "204": {
+                        "description": "Flow deleted"
+                    }
+                },
+                "summary": "Delete an individual flow configurationr",
+                "operationId": "delete_flow",
+                "tags": [
+                    "flow"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "Flow not found"
+                    },
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/flow"
+                        }
+                    }
+                },
+                "summary": "Get an individual flow configuration",
+                "operationId": "get_flow",
+                "parameters": [
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "flow"
+                ]
+            },
+            "put": {
+                "responses": {
+                    "404": {
+                        "description": "Flow not found"
+                    },
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/flow"
+                        }
+                    }
+                },
+                "summary": "Update an individual flow configuration",
+                "operationId": "put_flow",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/flow"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "flow"
+                ]
+            }
+        },
+        "/flows/": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/flow"
+                        }
+                    }
+                },
+                "summary": "Set the active flow configuration",
+                "operationId": "create_flows",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/flow"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "flows"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get the active flow configuration",
+                "operationId": "list_flows",
+                "tags": [
+                    "flows"
+                ]
+            }
+        },
+        "/nodes/": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/flow"
+                        }
+                    }
+                },
+                "summary": "Install a new node module",
+                "operationId": "create_flows",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/nodes"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "nodes"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get a list of the installed nodes",
+                "operationId": "list_flows",
+                "tags": [
+                    "nodes"
+                ]
+            }
+        },
+        "/nodes/{module}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "The name of the module",
+                    "name": "module",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "delete": {
+                "responses": {
+                    "404": {
+                        "description": "Node module not found"
+                    },
+                    "204": {
+                        "description": "Node Module deleted"
+                    }
+                },
+                "summary": "Remove a node module",
+                "operationId": "delete_module",
+                "tags": [
+                    "nodes"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "Node module not found"
+                    }
+                },
+                "summary": "Get a node module\u2019s information",
+                "operationId": "get_module",
+                "tags": [
+                    "nodes"
+                ]
+            },
+            "put": {
+                "responses": {
+                    "404": {
+                        "description": "Node module not found"
+                    }
+                },
+                "summary": "Enable/Disable a node module",
+                "operationId": "put_node",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/nodes"
+                        }
+                    }
+                ],
+                "tags": [
+                    "nodes"
+                ]
+            }
+        },
+        "/nodes/{module}/{set}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "The name of the set",
+                    "name": "set",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "The name of the module",
+                    "name": "module",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "Node module set not found"
+                    }
+                },
+                "summary": "Get a node module set information",
+                "operationId": "get_moduleset",
+                "tags": [
+                    "nodes"
+                ]
+            },
+            "put": {
+                "responses": {
+                    "404": {
+                        "description": "Node module set not found"
+                    }
+                },
+                "summary": "Enable/Disable a node set",
+                "operationId": "put_node",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/nodes"
+                        }
+                    }
+                ],
+                "tags": [
+                    "nodes"
+                ]
+            }
+        },
+        "/settings/": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "Runtime settings not found"
+                    }
+                },
+                "summary": "Get the runtime settings",
+                "operationId": "get_settings",
+                "tags": [
+                    "settings"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "NodeRED Admin REST API",
+        "version": "2.2.2",
+        "description": "NodeRED Admin REST API"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "auth",
+            "description": "Auth operations"
+        },
+        {
+            "name": "flows",
+            "description": "Flows operations"
+        },
+        {
+            "name": "flow",
+            "description": "Individual flow operations"
+        },
+        {
+            "name": "settings",
+            "description": "Runtime settings operations"
+        },
+        {
+            "name": "nodes",
+            "description": "Node operations"
+        }
+    ],
+    "definitions": {
+        "auth": {
+            "required": [
+                "client_id",
+                "grant_type",
+                "password",
+                "scope",
+                "username"
+            ],
+            "properties": {
+                "client_id": {
+                    "type": "string",
+                    "description": "identifies the client. Currently, must be either node-red-admin or node-red-editor"
+                },
+                "grant_type": {
+                    "type": "string",
+                    "description": "must be password"
+                },
+                "scope": {
+                    "type": "string",
+                    "description": "a space-separated list of permissions being requested. Currently, must be either * or read"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "the username to authenticate"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "the password to authenticate"
+                }
+            },
+            "type": "object"
+        },
+        "token": {
+            "required": [
+                "token"
+            ],
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "description": "The token to revoke"
+                }
+            },
+            "type": "object"
+        },
+        "flow": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "The flow id"
+                }
+            },
+            "type": "object"
+        },
+        "nodes": {
+            "required": [
+                "module"
+            ],
+            "properties": {
+                "module": {
+                    "type": "string",
+                    "description": "The module name"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "responses": {
+        "ParseError": {
+            "description": "When a mask can't be parsed"
+        },
+        "MaskError": {
+            "description": "When any error occurs on mask"
+        }
+    }
+}
